@@ -1,1 +1,1 @@
-# Fuzzy expert system build it in a weekend 😣😩
+# Fuzzy expert system build on a weekend 😣😩
