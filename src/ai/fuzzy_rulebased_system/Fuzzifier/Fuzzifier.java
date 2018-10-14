@@ -15,29 +15,27 @@ public class Fuzzifier {
         FuzzyVariable fuzzyVariable;
         LinguisticTag lTag;
         FileManager fm = new FileManager();
-        HashMap<String, Double> tag;
-        int indexTag = 0;
+        boolean valueInRange = false;
+        int tagIndex = 0;
         for(RealVariable rV : rVariables) {
-            while(indexTag < FileManager.TAGS_BY_VARIABLE) {
-                lTag = fm.getLinguisticTag(rV.getVarID(), indexTag);
+            while(tagIndex < FileManager.TAGS_BY_VARIABLE) {
+                lTag = fm.getLinguisticTag(rV.getVarID(), tagIndex);
                 if(lTag!=null) {
+                    fuzzyVariable = new FuzzyVariable();
+                    fuzzyVariable.setVarID(rV.getVarID());
                     for(Line l : lTag.getLinesList()) {
-                        fuzzyVariable = new FuzzyVariable();
-                        fuzzyVariable.setVarID(rV.getVarID());
-                        tag = new HashMap<>();
                         if(l.getPoint_a().getX() <= rV.getValue() && l.getPoint_b().getX() >= rV.getValue()) {
-                            tag.put(lTag.getName(), getMembership(l, rV.getValue()));
-                            fuzzyVariable.getMembershipByTag().add(tag);
-                        } else {
-                            tag.put(lTag.getName(), 0d);
-                            fuzzyVariable.getMembershipByTag().add(tag);
+                            fuzzyVariable.getMembershipByTag().put(lTag.getName(), getMembership(l, rV.getValue()));
+                            valueInRange = true;
                         }
-                        fuzzyVariables.add(fuzzyVariable);
                     }
+                    if(!valueInRange) fuzzyVariable.getMembershipByTag().put(lTag.getName(), 0d);
+                    fuzzyVariables.add(fuzzyVariable);
+                    valueInRange = false;
                 }
-                indexTag++;
+                tagIndex++;
             }
-            indexTag = 0;
+            tagIndex = 0;
         }
         return fuzzyVariables;
     }

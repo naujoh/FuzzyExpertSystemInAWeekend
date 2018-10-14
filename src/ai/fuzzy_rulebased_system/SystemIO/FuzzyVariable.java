@@ -6,10 +6,10 @@ import java.util.List;
 
 public class FuzzyVariable {
     private int varID;
-    private List<HashMap<String, Double>> membershipByTag;
+    private HashMap<String, Double> membershipByTag;
 
     public FuzzyVariable() {
-        membershipByTag = new ArrayList<>();
+        membershipByTag = new HashMap<>();
     }
 
     public int getVarID() {
@@ -20,11 +20,11 @@ public class FuzzyVariable {
         this.varID = varID;
     }
 
-    public void setMembershipByTag(List<HashMap<String, Double>> membershipByTag) {
-        this.membershipByTag = membershipByTag;
+    public HashMap<String, Double> getMembershipByTag() {
+        return membershipByTag;
     }
 
-    public List<HashMap<String, Double>> getMembershipByTag() {
-        return membershipByTag;
+    public void setMembershipByTag(HashMap<String, Double> membershipByTag) {
+        this.membershipByTag = membershipByTag;
     }
 }

@@ -95,6 +95,7 @@ public class FileManager {
     public List<RealVariable> getRealVariables() {
         List<RealVariable> variables = new ArrayList<>();
         RealVariable variable;
+        int ruleId;
         try {
             long n_registers;
             RandomAccessFile file = new RandomAccessFile(LINGUISTIC_VARS_MASTER, "r");
@@ -102,9 +103,12 @@ public class FileManager {
             for(int i = 0; i<n_registers; i++) {
                 variable = new RealVariable();
                 file.seek(REG_SIZE_LINGUISTIC_MASTER*i);
-                variable.setVarID(file.readInt());
-                variable.setName(readString(6, file).trim());
-                variables.add(variable);
+                ruleId = file.readInt();
+                if(ruleId != -1) {
+                    variable.setVarID(ruleId);
+                    variable.setName(readString(6, file).trim());
+                    variables.add(variable);
+                }
             }
             file.close();
         } catch (Exception e) { e.printStackTrace(); }
