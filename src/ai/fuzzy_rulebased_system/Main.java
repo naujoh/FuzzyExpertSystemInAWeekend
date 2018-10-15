@@ -24,11 +24,19 @@ public class Main {
         int i = 1;
 //        fileManager.loadLinguisticVariablesDataFromTextFile("linguistic_variables");
 //        fileManager.printLinguisticVariablesFiles();
-       // fileManager.loadTagPathXDataFromTextFile("tag_path_text_X");
-        //fileManager.loadTagPathYDataFromTextFile("tag_path_text_Y");
-        //fileManager.loadResulDataFromTextFile("resultsFam");
+       //fileManager.loadTagPathXDataFromTextFile("tag_path_text_X");
+       //fileManager.loadTagPathYDataFromTextFile("tag_path_text_Y");
+      //fileManager.loadResulDataFromTextFile("resultsFam");
+       
+       RandomAccessFile fileTraza = new RandomAccessFile("file_fam", "r");
+       String traza = "1,0,2,2,0,1,2,2";
+       String coord = fileManager.getCoordTagPath(traza, fileTraza);
+       System.out.println("COORDENADAS "+coord);
+       String coordSplit [] = coord.split(",");
+       
         RandomAccessFile fileRand = new RandomAccessFile("results_fam", "r");
-        String letra_resultado = fileManager.readResultsFam(2,0, fileRand);
+        Character letra_resultado = fileManager.readResultsFam(Integer.valueOf(coordSplit[0]),Integer.valueOf(coordSplit[1]), fileRand);
+        System.out.println("LETRA RESULTADO "+letra_resultado);
         System.out.println("Ingresa el valor real de cada variable");
         try {
             realVariableList = fileManager.getRealVariables();
