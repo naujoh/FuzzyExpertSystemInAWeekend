@@ -1,11 +1,10 @@
-package ai.fuzzy_rulebased_system.Fuzzifier;
+package ai.fuzzy_rulebased_system.Fuzzification;
 
 import ai.fuzzy_rulebased_system.Files.FileManager;
 import ai.fuzzy_rulebased_system.SystemIO.FuzzyVariable;
 import ai.fuzzy_rulebased_system.SystemIO.RealVariable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Fuzzifier {

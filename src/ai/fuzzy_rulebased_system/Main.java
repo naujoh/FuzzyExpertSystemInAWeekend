@@ -1,15 +1,12 @@
 package ai.fuzzy_rulebased_system;
 
 import ai.fuzzy_rulebased_system.Files.FileManager;
-import ai.fuzzy_rulebased_system.Fuzzifier.Fuzzifier;
-import ai.fuzzy_rulebased_system.Fuzzifier.Line;
-import ai.fuzzy_rulebased_system.Fuzzifier.LinguisticTag;
+import ai.fuzzy_rulebased_system.Fuzzification.Fuzzifier;
 import ai.fuzzy_rulebased_system.SystemIO.FuzzyVariable;
 import ai.fuzzy_rulebased_system.SystemIO.RealVariable;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
-import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -55,5 +52,13 @@ public class Main {
                 System.out.println("ETIQUETA: "+tag+"\tMEMBRESIA: "+f.getMembershipByTag().get(tag));
             }
         }
+
+/*        for(LinguisticTag lt : fileManager.getTagsOfOutputVariable()) {
+            System.out.println("NOMBRE: "+lt.getName());
+            for(Line l : lt.getLinesList()) {
+                System.out.println("L: ("+l.getPoint_a().getX()+" , "+l.getPoint_a().getY()+") - ("+l.getPoint_b().getX()+" , "+l.getPoint_b().getY()+")");
+            }
+        }
+*/
     }
 }

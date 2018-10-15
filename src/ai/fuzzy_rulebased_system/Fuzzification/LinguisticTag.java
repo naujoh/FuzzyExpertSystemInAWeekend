@@ -1,4 +1,4 @@
-package ai.fuzzy_rulebased_system.Fuzzifier;
+package ai.fuzzy_rulebased_system.Fuzzification;
 
 import java.util.ArrayList;
 import java.util.List;

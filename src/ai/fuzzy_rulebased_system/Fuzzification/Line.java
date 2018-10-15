@@ -1,4 +1,4 @@
-package ai.fuzzy_rulebased_system.Fuzzifier;
+package ai.fuzzy_rulebased_system.Fuzzification;
 
 public class Line {
     private Point point_a;

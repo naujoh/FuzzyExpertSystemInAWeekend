@@ -1,8 +1,8 @@
 package ai.fuzzy_rulebased_system.Files;
 
-import ai.fuzzy_rulebased_system.Fuzzifier.Line;
-import ai.fuzzy_rulebased_system.Fuzzifier.LinguisticTag;
-import ai.fuzzy_rulebased_system.Fuzzifier.Point;
+import ai.fuzzy_rulebased_system.Fuzzification.Line;
+import ai.fuzzy_rulebased_system.Fuzzification.LinguisticTag;
+import ai.fuzzy_rulebased_system.Fuzzification.Point;
 import ai.fuzzy_rulebased_system.SystemIO.RealVariable;
 import ai.fuzzy_rulebased_system.SystemIO.TagPathModel;
 
@@ -345,6 +345,7 @@ public class FileManager {
                         if (point != -1) {
                             line = new Line(new Point(point, file.readDouble()), new Point(file.readDouble(), file.readDouble()));
                             linguisticTag.getLinesList().add(line);
+                            i+=3;
                         } else break;
                     }
                 }
@@ -352,6 +353,47 @@ public class FileManager {
             }
         } catch (Exception e) { e.printStackTrace(); }
         return linguisticTag;
+    }
+
+    public List<LinguisticTag> getTagsOfOutputVariable() {
+        List<LinguisticTag> linguisticTags = new ArrayList<>();
+        LinguisticTag linguisticTag;
+        Line line;
+        long logicaddress = 0;
+        int i = 0;
+        double point;
+        try {
+            RandomAccessFile file = new RandomAccessFile(LINGUISTIC_VARS_INDEX, "r");
+            file.seek(0);
+            while (file.getFilePointer()<file.length()) {
+                if(file.readInt()==-1) {
+                    logicaddress = file.readLong();
+                    break;
+                }
+            }
+            file.close();
+            file = new RandomAccessFile(LINGUISTIC_VARS_MASTER, "r");
+            while(file.getFilePointer()<file.length()) {
+                file.seek(logicaddress+Integer.BYTES+(106*Character.BYTES)+i*((10*Character.BYTES)+(12*Double.BYTES)));
+                linguisticTag = new LinguisticTag();
+                linguisticTag.setName(readString(10, file).trim());
+                for(int j = 1; j < ELEMENTS_INT_LINGUISTIC_TAG-1; j++) {
+                    point = file.readDouble();
+                    if (point != -1) {
+                        line = new Line(new Point(point, file.readDouble()), new Point(file.readDouble(), file.readDouble()));
+                        linguisticTag.getLinesList().add(line);
+                        j+=3;
+                    } else {
+                        file.seek(logicaddress+Integer.BYTES+(106*Character.BYTES)+(i+1)*((10*Character.BYTES)+(12*Double.BYTES)));
+                        break;
+                    }
+                }
+                linguisticTags.add(linguisticTag);
+                i++;
+            }
+            file.close();
+        } catch (Exception e) { e.printStackTrace(); }
+        return linguisticTags;
     }
 
     // A test method
