@@ -6,6 +6,8 @@ import ai.fuzzy_rulebased_system.Fuzzifier.Line;
 import ai.fuzzy_rulebased_system.Fuzzifier.LinguisticTag;
 import ai.fuzzy_rulebased_system.SystemIO.FuzzyVariable;
 import ai.fuzzy_rulebased_system.SystemIO.RealVariable;
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -14,7 +16,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         FileManager fileManager = new FileManager();
         Scanner scanner = new Scanner(System.in);
         Fuzzifier fuzzifier = new Fuzzifier();
@@ -22,8 +24,11 @@ public class Main {
         int i = 1;
 //        fileManager.loadLinguisticVariablesDataFromTextFile("linguistic_variables");
 //        fileManager.printLinguisticVariablesFiles();
-        fileManager.loadTagPathXDataFromTextFile("tag_path_text_X");
-        fileManager.loadTagPathYDataFromTextFile("tag_path_text_Y");
+       // fileManager.loadTagPathXDataFromTextFile("tag_path_text_X");
+        //fileManager.loadTagPathYDataFromTextFile("tag_path_text_Y");
+        //fileManager.loadResulDataFromTextFile("resultsFam");
+        RandomAccessFile fileRand = new RandomAccessFile("results_fam", "r");
+        String letra_resultado = fileManager.readResultsFam(2,0, fileRand);
         System.out.println("Ingresa el valor real de cada variable");
         try {
             realVariableList = fileManager.getRealVariables();

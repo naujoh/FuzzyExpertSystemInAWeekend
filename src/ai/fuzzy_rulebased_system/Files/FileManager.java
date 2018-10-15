@@ -20,6 +20,7 @@ public class FileManager {
     private final String TAG_PATH_TEXT_X = "tag_path_text_x";
     private final String TAG_PATH_TEXT_Y = "tag_path_text_y";
     private final String FILE_FAM = "file_fam";
+    RandomAccessFile fileRand;
     ArrayList<TagPathModel> listTag = new ArrayList();
     String vecX[] = new String [81];
     String vecY[] = new String [81];
@@ -126,6 +127,60 @@ public class FileManager {
         catch (Exception e) { e.printStackTrace(); }
     }
     
+    public void loadResulDataFromTextFile(String filename) {
+        try {
+            File file = new File(filename);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringTokenizer stringTokenizer;
+            StringBuffer stringBuffer;
+            String line;
+            int y = 0;
+            int x = 0;
+            int cont = 0;
+         
+            String [] elementoSplit;
+             String subEle [];
+            fileRand = new RandomAccessFile("results_fam", "rw");
+            while((line = bufferedReader.readLine()) != null) {
+                x= 0;
+                y ++;
+                stringTokenizer = new StringTokenizer(line, ",");
+                while(stringTokenizer.hasMoreElements()) {
+                    String elemento = new StringBuffer(stringTokenizer.nextToken()).toString();
+                        fileRand.seek(fileRand.length());
+                        fileRand.writeInt(x);
+                        fileRand.writeInt(y);
+                        fileRand.writeUTF(elemento);
+                        System.out.println("x= "+x+"y= "+y+"VALOR = "+elemento);
+                        x++;
+                }
+            }
+            
+            
+
+        }
+        
+        catch (Exception e) { e.printStackTrace(); }
+
+    }
+    public String readResultsFam(int x, int y, RandomAccessFile file) {
+        int pos = (x*10) + (y*810);
+        String elemento = "";
+        try {
+            int tam = (int) Math.ceil((double) file.length() / (double) 10);
+            System.out.println("num registros---> "+tam);
+            file.seek(pos);
+            file.readInt();
+            file.readInt();
+            elemento = file.readUTF();
+            System.out.println("ELEMENTO RETURN "+elemento);
+            file.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return elemento;
+    }
     public void loadLinguisticVariablesDataFromTextFile(String filename) {
         try {
             File file = new File(filename);
