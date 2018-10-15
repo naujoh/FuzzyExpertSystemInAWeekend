@@ -4,6 +4,7 @@ import ai.fuzzy_rulebased_system.Fuzzifier.Line;
 import ai.fuzzy_rulebased_system.Fuzzifier.LinguisticTag;
 import ai.fuzzy_rulebased_system.Fuzzifier.Point;
 import ai.fuzzy_rulebased_system.SystemIO.RealVariable;
+import ai.fuzzy_rulebased_system.SystemIO.TagPathModel;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +17,115 @@ public class FileManager {
     private final int REG_SIZE_LINGUISTIC_MASTER = Integer.BYTES+(106*Character.BYTES)+(5*((10*Character.BYTES)+(12*Double.BYTES)));
     private final String LINGUISTIC_VARS_INDEX = "linguistic_variables_index";
     private final String LINGUISTIC_VARS_MASTER = "linguistic_variables_master";
+    private final String TAG_PATH_TEXT_X = "tag_path_text_x";
+    private final String TAG_PATH_TEXT_Y = "tag_path_text_y";
+    private final String FILE_FAM = "file_fam";
+    ArrayList<TagPathModel> listTag = new ArrayList();
+    String vecX[] = new String [81];
+    String vecY[] = new String [81];
+    TagPathModel objTag;
+    public void loadTagPathXDataFromTextFile(String filename) {
+        try {
+            File file = new File(filename);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringTokenizer stringTokenizer;
+            StringBuffer stringBuffer;
+            String line;
+            int i = 0;
+         
+            String [] elementoSplit;
+             String subEle [];
+            while((line = bufferedReader.readLine()) != null) {
+                stringTokenizer = new StringTokenizer(line, ";");
+                while(stringTokenizer.hasMoreElements()) {
+                    String elemento = new StringBuffer(stringTokenizer.nextToken()).toString();
+                    objTag = new TagPathModel();
+                    elementoSplit = elemento.split(",");
+                    subEle = elementoSplit[0].split("-");
+                    objTag.setSOLPRO(subEle[1]);
+                    
+                    subEle = elementoSplit[1].split("-");
+                    objTag.setCAAPCP(subEle[1]);
+                    
+                    subEle = elementoSplit[2].split("-");
+                    objTag.setHABINV(subEle[1]);
+                    
+                    subEle = elementoSplit[3].split("-");
+                    objTag.setCADIGP(subEle[1]);
+                    listTag.add(objTag);
+                }
+            }
+            
 
+        }
+        
+        catch (Exception e) { e.printStackTrace(); }
+
+    }
+    public void loadTagPathYDataFromTextFile(String filename) {
+        try {
+            File file = new File(filename);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringTokenizer stringTokenizer;
+            StringBuffer stringBuffer;
+            String line;
+            int x = 0, y = 0;
+            
+            String [] elementoSplit;
+             String subEle [];
+            while((line = bufferedReader.readLine()) != null) {
+                stringTokenizer = new StringTokenizer(line, ";");
+                while(stringTokenizer.hasMoreElements()) {
+                    String elemento = new StringBuffer(stringTokenizer.nextToken()).toString();
+                    for (int j = 0; j < listTag.size(); j++) {
+                        elementoSplit = elemento.split(",");
+                        subEle = elementoSplit[0].split("-");
+                        listTag.get(j).setCAPAAS(subEle[1]);
+
+                        subEle = elementoSplit[1].split("-");
+                        listTag.get(j).setTRABEQ(subEle[1]);
+                        
+                        subEle = elementoSplit[2].split("-");
+                        listTag.get(j).setHATRFA(subEle[1]);
+                        
+                        subEle = elementoSplit[3].split("-");
+                        listTag.get(j).setBUSLOG(subEle[1]);
+                        
+                        x = j;
+                        loadFileFam(x, y, listTag.get(j));
+                        y ++;
+                    }
+                    
+                    
+                }
+            }
+
+        } catch (Exception e) { e.printStackTrace(); }
+
+    }
+    
+    public void loadFileFam(int x, int y, TagPathModel objTraza)
+    {
+         try {
+            RandomAccessFile file = new RandomAccessFile(FILE_FAM, "rw");
+                    file.seek(file.length());
+                    file.writeInt(x);
+                    file.writeInt(y);
+                    file.writeUTF(objTraza.getSOLPRO());
+                    file.writeUTF(objTraza.getCAAPCP());
+                    file.writeUTF(objTraza.getHABINV());
+                    file.writeUTF(objTraza.getCADIGP());
+                    file.writeUTF(objTraza.getCAPAAS());
+                    file.writeUTF(objTraza.getTRABEQ());
+                    file.writeUTF(objTraza.getHATRFA());
+                    file.writeUTF(objTraza.getBUSLOG());
+                    file.close();
+            }
+        catch (Exception e) { e.printStackTrace(); }
+    }
+    
     public void loadLinguisticVariablesDataFromTextFile(String filename) {
         try {
             File file = new File(filename);

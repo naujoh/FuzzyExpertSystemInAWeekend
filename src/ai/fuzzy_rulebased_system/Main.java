@@ -22,6 +22,8 @@ public class Main {
         int i = 1;
 //        fileManager.loadLinguisticVariablesDataFromTextFile("linguistic_variables");
 //        fileManager.printLinguisticVariablesFiles();
+        fileManager.loadTagPathXDataFromTextFile("tag_path_text_X");
+        fileManager.loadTagPathYDataFromTextFile("tag_path_text_Y");
         System.out.println("Ingresa el valor real de cada variable");
         try {
             realVariableList = fileManager.getRealVariables();
