@@ -10,71 +10,71 @@ package ai.fuzzy_rulebased_system.SystemIO;
  * @author susa
  */
 public class TagPathModel {
-    String SOLPRO = "", HABINV = "", CAAPCP = "", TRABEQ = "", HATRFA = "",CADIGP= "", BUSLOG = "", CAPAAS = "";
+    Character SOLPRO, HABINV, CAAPCP, TRABEQ, HATRFA,CADIGP, BUSLOG , CAPAAS ;
 
-    public String getSOLPRO() {
+    public Character getSOLPRO() {
         return SOLPRO;
     }
 
-    public void setSOLPRO(String SOLPRO) {
+    public void setSOLPRO(Character SOLPRO) {
         this.SOLPRO = SOLPRO;
     }
 
-    public String getHABINV() {
+    public Character getHABINV() {
         return HABINV;
     }
 
-    public void setHABINV(String HABINV) {
+    public void setHABINV(Character HABINV) {
         this.HABINV = HABINV;
     }
 
-    public String getCAAPCP() {
+    public Character getCAAPCP() {
         return CAAPCP;
     }
 
-    public void setCAAPCP(String CAAPCP) {
+    public void setCAAPCP(Character CAAPCP) {
         this.CAAPCP = CAAPCP;
     }
 
-    public String getTRABEQ() {
+    public Character getTRABEQ() {
         return TRABEQ;
     }
 
-    public void setTRABEQ(String TRABEQ) {
+    public void setTRABEQ(Character TRABEQ) {
         this.TRABEQ = TRABEQ;
     }
 
-    public String getHATRFA() {
+    public Character getHATRFA() {
         return HATRFA;
     }
 
-    public void setHATRFA(String HATRFA) {
+    public void setHATRFA(Character HATRFA) {
         this.HATRFA = HATRFA;
     }
 
-    public String getCADIGP() {
+    public Character getCADIGP() {
         return CADIGP;
     }
 
-    public void setCADIGP(String CADIGP) {
+    public void setCADIGP(Character CADIGP) {
         this.CADIGP = CADIGP;
     }
 
-    public String getBUSLOG() {
+    public Character getBUSLOG() {
         return BUSLOG;
     }
 
-    public void setBUSLOG(String BUSLOG) {
+    public void setBUSLOG(Character BUSLOG) {
         this.BUSLOG = BUSLOG;
     }
 
-    public String getCAPAAS() {
+    public Character getCAPAAS() {
         return CAPAAS;
     }
 
-    public void setCAPAAS(String CAPAAS) {
+    public void setCAPAAS(Character CAPAAS) {
         this.CAPAAS = CAPAAS;
     }
     
-    
+
 }

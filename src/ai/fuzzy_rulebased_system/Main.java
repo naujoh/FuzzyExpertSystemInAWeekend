@@ -4,6 +4,8 @@ import ai.fuzzy_rulebased_system.Files.FileManager;
 import ai.fuzzy_rulebased_system.Fuzzification.Fuzzifier;
 import ai.fuzzy_rulebased_system.SystemIO.FuzzyVariable;
 import ai.fuzzy_rulebased_system.SystemIO.RealVariable;
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -11,16 +13,19 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         FileManager fileManager = new FileManager();
         Scanner scanner = new Scanner(System.in);
         Fuzzifier fuzzifier = new Fuzzifier();
+		Inference inference = new Inference();
         List<RealVariable> realVariableList=null;
         int i = 1;
 //        fileManager.loadLinguisticVariablesDataFromTextFile("linguistic_variables");
 //        fileManager.printLinguisticVariablesFiles();
-        fileManager.loadTagPathXDataFromTextFile("tag_path_text_X");
-        fileManager.loadTagPathYDataFromTextFile("tag_path_text_Y");
+       //fileManager.loadTagPathXDataFromTextFile("tag_path_text_X");
+       //fileManager.loadTagPathYDataFromTextFile("tag_path_text_Y");
+      //fileManager.loadResulDataFromTextFile("resultsFam");
+            
         System.out.println("Ingresa el valor real de cada variable");
         try {
             realVariableList = fileManager.getRealVariables();
@@ -39,6 +44,8 @@ public class Main {
                 System.out.println("ETIQUETA: "+tag+"\tMEMBRESIA: "+f.getMembershipByTag().get(tag));
             }
         }
+
+        inference.deduce(fuzzifier.fuzzify(realVariableList));
 
 /*        for(LinguisticTag lt : fileManager.getTagsOfOutputVariable()) {
             System.out.println("NOMBRE: "+lt.getName());

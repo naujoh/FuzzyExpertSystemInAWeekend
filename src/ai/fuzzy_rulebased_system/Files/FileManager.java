@@ -20,6 +20,7 @@ public class FileManager {
     private final String TAG_PATH_TEXT_X = "tag_path_text_x";
     private final String TAG_PATH_TEXT_Y = "tag_path_text_y";
     private final String FILE_FAM = "file_fam";
+    RandomAccessFile fileRand;
     ArrayList<TagPathModel> listTag = new ArrayList();
     String vecX[] = new String [81];
     String vecY[] = new String [81];
@@ -43,16 +44,16 @@ public class FileManager {
                     objTag = new TagPathModel();
                     elementoSplit = elemento.split(",");
                     subEle = elementoSplit[0].split("-");
-                    objTag.setSOLPRO(subEle[1]);
+                    objTag.setSOLPRO(subEle[1].charAt(0));
                     
                     subEle = elementoSplit[1].split("-");
-                    objTag.setCAAPCP(subEle[1]);
+                    objTag.setCAAPCP(subEle[1].charAt(0));
                     
                     subEle = elementoSplit[2].split("-");
-                    objTag.setHABINV(subEle[1]);
+                    objTag.setHABINV(subEle[1].charAt(0));
                     
                     subEle = elementoSplit[3].split("-");
-                    objTag.setCADIGP(subEle[1]);
+                    objTag.setCADIGP(subEle[1].charAt(0));
                     listTag.add(objTag);
                 }
             }
@@ -82,21 +83,21 @@ public class FileManager {
                     for (int j = 0; j < listTag.size(); j++) {
                         elementoSplit = elemento.split(",");
                         subEle = elementoSplit[0].split("-");
-                        listTag.get(j).setCAPAAS(subEle[1]);
+                        listTag.get(j).setCAPAAS(subEle[1].charAt(0));
 
                         subEle = elementoSplit[1].split("-");
-                        listTag.get(j).setTRABEQ(subEle[1]);
+                        listTag.get(j).setTRABEQ(subEle[1].charAt(0));
                         
                         subEle = elementoSplit[2].split("-");
-                        listTag.get(j).setHATRFA(subEle[1]);
+                        listTag.get(j).setHATRFA(subEle[1].charAt(0));
                         
                         subEle = elementoSplit[3].split("-");
-                        listTag.get(j).setBUSLOG(subEle[1]);
+                        listTag.get(j).setBUSLOG(subEle[1].charAt(0));
                         
                         x = j;
                         loadFileFam(x, y, listTag.get(j));
-                        y ++;
                     }
+                    y ++;
                     
                     
                 }
@@ -113,19 +114,110 @@ public class FileManager {
                     file.seek(file.length());
                     file.writeInt(x);
                     file.writeInt(y);
-                    file.writeUTF(objTraza.getSOLPRO());
-                    file.writeUTF(objTraza.getCAAPCP());
-                    file.writeUTF(objTraza.getHABINV());
-                    file.writeUTF(objTraza.getCADIGP());
-                    file.writeUTF(objTraza.getCAPAAS());
-                    file.writeUTF(objTraza.getTRABEQ());
-                    file.writeUTF(objTraza.getHATRFA());
-                    file.writeUTF(objTraza.getBUSLOG());
+                    file.writeChar(objTraza.getSOLPRO());
+                    file.writeChar(objTraza.getCAAPCP());
+                    file.writeChar(objTraza.getHABINV());
+                    file.writeChar(objTraza.getCADIGP());
+                    file.writeChar(objTraza.getCAPAAS());
+                    file.writeChar(objTraza.getTRABEQ());
+                    file.writeChar(objTraza.getHATRFA());
+                    file.writeChar(objTraza.getBUSLOG());
                     file.close();
             }
         catch (Exception e) { e.printStackTrace(); }
     }
     
+    public void loadResulDataFromTextFile(String filename) {
+        try {
+            File file = new File(filename);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringTokenizer stringTokenizer;
+            StringBuffer stringBuffer;
+            String line;
+            int y = 0;
+            int x = 0;
+            int cont = 0;
+         
+            String [] elementoSplit;
+             String subEle [];
+            fileRand = new RandomAccessFile("results_fam", "rw");
+            while((line = bufferedReader.readLine()) != null) {
+                x= 0;
+                stringTokenizer = new StringTokenizer(line, ",");
+                while(stringTokenizer.hasMoreElements()) {
+                    String elemento = new StringBuffer(stringTokenizer.nextToken()).toString();
+                    Character valChar = elemento.charAt(0);
+                        fileRand.seek(fileRand.length());
+                        fileRand.writeInt(x);
+                        fileRand.writeInt(y);
+                        if(valChar!= 'A' && valChar!= 'B' && valChar!= 'C' && valChar!= 'D' && valChar!= 'E')
+                        {
+                            fileRand.writeChar(elemento.charAt(1));
+                            System.out.println("x= "+x+"y= "+y+"VALOR = "+elemento.charAt(1));
+                        }else
+                        {
+                            fileRand.writeChar(elemento.charAt(0));
+                            System.out.println("x= "+x+"y= "+y+"VALOR = "+elemento.charAt(0));
+                        }
+                        
+                        x++;
+                }
+                y ++;
+            }
+            
+            
+
+        }
+        
+        catch (Exception e) { e.printStackTrace(); }
+
+    }
+    
+    public String getCoordTagPath(String traza, RandomAccessFile file) {
+        int pos = 0, x=0,y=0;
+        Character el1 , el2, el3, el4, el5, el6, el7, el8;
+        String elemento = "", coord = "";
+        try {
+            while(!traza.equals(elemento))
+            {
+                file.seek(pos);
+                x = file.readInt();
+                y = file.readInt();
+                el1 = file.readChar();
+                el2 = file.readChar();
+                el3 = file.readChar();
+                el4 = file.readChar();
+                el5 = file.readChar();
+                el6 = file.readChar();
+                el7 = file.readChar();
+                el8 = file.readChar();
+                elemento = el1 + "," + el2 + "," + el3 + "," + el4 + "," + el5 + "," + el6 + "," + el7 + "," + el8;
+                pos = pos + 24;
+                
+            }
+            coord = x +","+y;
+            file.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return coord;
+    }
+    
+    public Character readResultsFam(int x, int y, RandomAccessFile file) {
+        int pos = (x*10) + (y*810);
+        Character elemento = null ;
+        try {
+                file.seek(pos);
+                file.readInt();
+                file.readInt();
+                elemento = file.readChar();
+                file.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        return elemento;
+    }
     public void loadLinguisticVariablesDataFromTextFile(String filename) {
         try {
             File file = new File(filename);
