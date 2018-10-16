@@ -17,6 +17,7 @@ public class Main {
         FileManager fileManager = new FileManager();
         Scanner scanner = new Scanner(System.in);
         Fuzzifier fuzzifier = new Fuzzifier();
+		Inference inference = new Inference();
         List<RealVariable> realVariableList=null;
         int i = 1;
 //        fileManager.loadLinguisticVariablesDataFromTextFile("linguistic_variables");
@@ -24,16 +25,7 @@ public class Main {
        //fileManager.loadTagPathXDataFromTextFile("tag_path_text_X");
        //fileManager.loadTagPathYDataFromTextFile("tag_path_text_Y");
       //fileManager.loadResulDataFromTextFile("resultsFam");
-       
-       RandomAccessFile fileTraza = new RandomAccessFile("file_fam", "r");
-       String traza = "1,0,2,2,0,1,2,2";
-       String coord = fileManager.getCoordTagPath(traza, fileTraza);
-       System.out.println("COORDENADAS "+coord);
-       String coordSplit [] = coord.split(",");
-       
-        RandomAccessFile fileRand = new RandomAccessFile("results_fam", "r");
-        Character letra_resultado = fileManager.readResultsFam(Integer.valueOf(coordSplit[0]),Integer.valueOf(coordSplit[1]), fileRand);
-        System.out.println("LETRA RESULTADO "+letra_resultado);
+            
         System.out.println("Ingresa el valor real de cada variable");
         try {
             realVariableList = fileManager.getRealVariables();
@@ -52,6 +44,8 @@ public class Main {
                 System.out.println("ETIQUETA: "+tag+"\tMEMBRESIA: "+f.getMembershipByTag().get(tag));
             }
         }
+
+        inference.deduce(fuzzifier.fuzzify(realVariableList));
 
 /*        for(LinguisticTag lt : fileManager.getTagsOfOutputVariable()) {
             System.out.println("NOMBRE: "+lt.getName());
