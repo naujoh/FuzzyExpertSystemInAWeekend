@@ -1,12 +1,15 @@
 package ai.fuzzy_rulebased_system;
 
+import ai.fuzzy_rulebased_system.Defuzzification.Defuzzifier;
 import ai.fuzzy_rulebased_system.Files.FileManager;
 import ai.fuzzy_rulebased_system.Fuzzification.Fuzzifier;
+import ai.fuzzy_rulebased_system.Inference.Inference;
 import ai.fuzzy_rulebased_system.SystemIO.FuzzyVariable;
 import ai.fuzzy_rulebased_system.SystemIO.RealVariable;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +29,7 @@ public class Main {
        //fileManager.loadTagPathYDataFromTextFile("tag_path_text_Y");
       //fileManager.loadResulDataFromTextFile("resultsFam");
             
-        System.out.println("Ingresa el valor real de cada variable");
+       System.out.println("Ingresa el valor real de cada variable");
         try {
             realVariableList = fileManager.getRealVariables();
             for(RealVariable r : realVariableList) {
@@ -46,7 +49,17 @@ public class Main {
         }
 
         inference.deduce(fuzzifier.fuzzify(realVariableList));
+        /*
+        CENTROID TEST
+        HashMap<String, Double> fuzzyOutput = new HashMap<>();
+        fuzzyOutput.put("REPROBADO", 1.0);
+        fuzzyOutput.put("CASI_APR", 1.0);
+        fuzzyOutput.put("APR_ESF", 1.0);
+        fuzzyOutput.put("APROBADO", 1.0);
+        fuzzyOutput.put("APR_MERITO", 0.434763);
 
+        Defuzzifier d = new Defuzzifier();
+        System.out.println(d.defuzzify(fuzzyOutput));*/
 /*        for(LinguisticTag lt : fileManager.getTagsOfOutputVariable()) {
             System.out.println("NOMBRE: "+lt.getName());
             for(Line l : lt.getLinesList()) {

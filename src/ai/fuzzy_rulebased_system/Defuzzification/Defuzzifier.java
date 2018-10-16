@@ -18,7 +18,7 @@ public class Defuzzifier {
         iPoints = intersectionPoint.getIntersectionPoints();
     }
 
-    public void defuzzify (HashMap<String, Double> fuzzyOutput) {
+    public Double defuzzify (HashMap<String, Double> fuzzyOutput) {
         FileManager fileManager = new FileManager();
         List<LinguisticTag> lTags = fileManager.getTagsOfOutputVariable();
         Point p;
@@ -78,6 +78,7 @@ public class Defuzzifier {
                 }
             }
         }
+        return a/b;
     }
 
     private Point getIntersectionPoint (LinguisticTag actualTag, LinguisticTag nextTag) {

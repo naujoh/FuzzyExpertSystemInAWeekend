@@ -1,10 +1,15 @@
 package ai.fuzzy_rulebased_system.Inference;
 
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import ai.fuzzy_rulebased_system.Files.FileManager;
 import ai.fuzzy_rulebased_system.SystemIO.FuzzyVariable;
+import ai.fuzzy_rulebased_system.SystemIO.PreOutputTag;
 
 public class Inference {
 
