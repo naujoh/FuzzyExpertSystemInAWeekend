@@ -19,9 +19,11 @@ public class Inference {
 	List<PreOutputTag> CList = new ArrayList<>();
 	List<PreOutputTag> DList = new ArrayList<>();
 	List<PreOutputTag> EList = new ArrayList<>();
+	List<FuzzyOutput> FuzzyOutputList = new ArrayList<>();
+	FuzzyOutput fuzzyOutput;
 	PreOutputTag preOutputTag;
 
-	public void deduce(List<FuzzyVariable> fVariables) throws FileNotFoundException {
+	public List<FuzzyOutput> deduce(List<FuzzyVariable> fVariables) throws FileNotFoundException {
 		ArrayList<Double> SOLPRO = new ArrayList<Double>();
 		ArrayList<Double> CAAPCP = new ArrayList<Double>();
 		ArrayList<Double> HABINV = new ArrayList<Double>();
@@ -138,7 +140,7 @@ public class Inference {
 		
 		System.out.println("");
 		System.out.println("Variables de salida difusas----------");
-		printMaxs();
+		return printMaxs();
 	}
 
 	public Character getOutputTag(String traza) throws FileNotFoundException {
@@ -179,36 +181,78 @@ public class Inference {
 		}
 	}
 	
-	public void printMaxs() {
+	public List<FuzzyOutput> printMaxs() {
 		AList.sort(Comparator.comparing(PreOutputTag::getValue).reversed());
 		BList.sort(Comparator.comparing(PreOutputTag::getValue).reversed());
 		CList.sort(Comparator.comparing(PreOutputTag::getValue).reversed());
 		DList.sort(Comparator.comparing(PreOutputTag::getValue).reversed());
 		EList.sort(Comparator.comparing(PreOutputTag::getValue).reversed());
+		
 		if(AList.isEmpty()) {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tA \tMEMBRESIA: 0");
+			fuzzyOutput.setVarID(1);
+			fuzzyOutput.getMembershipByTag().put("A",0.0);
+			FuzzyOutputList.add(fuzzyOutput);
 		}else {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tA \tMEMBRESIA: " + AList.get(0).getValue());
+			fuzzyOutput.setVarID(1);
+			fuzzyOutput.getMembershipByTag().put("A",AList.get(0).getValue());
+			FuzzyOutputList.add(fuzzyOutput);
 		}
 		if(BList.isEmpty()) {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tB \tMEMBRESIA: 0");
+			fuzzyOutput.setVarID(2);
+			fuzzyOutput.getMembershipByTag().put("B",0.0);
+			FuzzyOutputList.add(fuzzyOutput);
 		}else {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tB \tMEMBRESIA: " + BList.get(0).getValue());
+			fuzzyOutput.setVarID(2);
+			fuzzyOutput.getMembershipByTag().put("B",BList.get(0).getValue());
+			FuzzyOutputList.add(fuzzyOutput);
 		}
 		if(CList.isEmpty()) {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tC \tMEMBRESIA: 0");
+			fuzzyOutput.setVarID(3);
+			fuzzyOutput.getMembershipByTag().put("C",0.0);
+			FuzzyOutputList.add(fuzzyOutput);
 		}else {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tC \tMEMBRESIA: " + CList.get(0).getValue());
+			fuzzyOutput.setVarID(3);
+			fuzzyOutput.getMembershipByTag().put("C",CList.get(0).getValue());
+			FuzzyOutputList.add(fuzzyOutput);
 		}
 		if(DList.isEmpty()) {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tD \tMEMBRESIA: 0");
+			fuzzyOutput.setVarID(4);
+			fuzzyOutput.getMembershipByTag().put("D",0.0);
+			FuzzyOutputList.add(fuzzyOutput);
 		}else {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tD \tMEMBRESIA: " + DList.get(0).getValue());
+			fuzzyOutput.setVarID(4);
+			fuzzyOutput.getMembershipByTag().put("D",DList.get(0).getValue());
+			FuzzyOutputList.add(fuzzyOutput);
 		}
 		if(EList.isEmpty()) {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tE \tMEMBRESIA: 0");
+			fuzzyOutput.setVarID(5);
+			fuzzyOutput.getMembershipByTag().put("E",0.0);
+			FuzzyOutputList.add(fuzzyOutput);
 		}else {
+			fuzzyOutput = new FuzzyOutput();
 			System.out.println("\tE \tMEMBRESIA: " + EList.get(0).getValue());
+			fuzzyOutput.setVarID(5);
+			fuzzyOutput.getMembershipByTag().put("E",EList.get(0).getValue());
+			FuzzyOutputList.add(fuzzyOutput);
 		}
+		return FuzzyOutputList;
 	}
 }

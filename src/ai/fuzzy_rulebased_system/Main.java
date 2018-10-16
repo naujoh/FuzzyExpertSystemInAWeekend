@@ -22,6 +22,7 @@ public class Main {
         Fuzzifier fuzzifier = new Fuzzifier();
 		Inference inference = new Inference();
         List<RealVariable> realVariableList=null;
+        List<FuzzyOutput> FuzzyOutputList = new ArrayList<>();
         int i = 1;
 //        fileManager.loadLinguisticVariablesDataFromTextFile("linguistic_variables");
 //        fileManager.printLinguisticVariablesFiles();
@@ -48,7 +49,12 @@ public class Main {
             }
         }
 
-        inference.deduce(fuzzifier.fuzzify(realVariableList));
+        FuzzyOutputList = inference.deduce(fuzzifier.fuzzify(realVariableList));
+        /*
+        for(FuzzyOutput f :FuzzyOutputList) {
+            System.out.println("SALIDA: "+f.getMembershipByTag());
+        }/*
+        
         /*
         CENTROID TEST
         HashMap<String, Double> fuzzyOutput = new HashMap<>();
